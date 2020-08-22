@@ -8,6 +8,10 @@
 #include <errno.h>
 #include <limits.h>
 
+#ifdef USE_TRAND
+# include "trand.h"
+#endif
+
 #define NUMBER_LEN(x) strlen(#x);
 
 static char *g_name = "shuf";
@@ -192,7 +196,11 @@ int main(int argc, char **argv)
 	}
 	for (size_t i = lines.len - 1; i > 0; i--)
 	{
+#ifndef USE_TRAND
 		size_t j = rand() % i;
+#else
+		size_t j = trand() % i;
+#endif
 		char *tmp = lines.data[i];
 		lines.data[i] = lines.data[j];
 		lines.data[j] = tmp;

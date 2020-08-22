@@ -6,7 +6,8 @@ CCFLAGS = -Wall -Wextra -Wpedantic
 
 all: prebuild $(BINDIR)/basename $(BINDIR)/chown $(BINDIR)/cut $(BINDIR)/head \
 		$(BINDIR)/mkdir $(BINDIR)/mv $(BINDIR)/rm $(BINDIR)/seq \
-		$(BINDIR)/shuf $(BINDIR)/tee $(BINDIR)/tr
+		$(BINDIR)/shuf $(BINDIR)/tee $(BINDIR)/tr \
+		$(BINDIR)/shuf_trand
 
 prebuild:
 	mkdir -vp $(BINDIR)
@@ -43,6 +44,13 @@ $(BINDIR)/tee: $(SRCDIR)/tee.c
 
 $(BINDIR)/tr: $(SRCDIR)/tr.c
 	$(CC) $(CCFLAGS) -o $@ $^
+
+#### shuf using trand
+TRAND_PATH = trand
+
+$(BINDIR)/shuf_trand: $(SRCDIR)/shuf.c
+	make --no-print-directory -C $(TRAND_PATH)
+	$(CC) $(CCFLAGS) -o $@ $^ -DUSE_TRAND -I$(TRAND_PATH) -L$(TRAND_PATH) -ltrand -lpthread
 
 clean:
 	rm -vf $(BINDIR)/*

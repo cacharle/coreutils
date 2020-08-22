@@ -1,0 +1,3 @@
+[submodule "trand"]
+	path = trand
+	url = https://github.com/SaltyMilk/trand
