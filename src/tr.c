@@ -203,25 +203,26 @@ int main(int argc, char **argv)
 	{
 		for (size_t i = 0; i < read_size; i++)
 		{
-			if (flags & FLAG_DELETE && flags & FLAG_SQUEEZE)
-			{
-
-			}
-			else if (flags & FLAG_DELETE && match())
-			{
-				memmove(&buf[i], &buf[i + 1], read_size - i);
-
-			else if (flags & FLAG_SQUEEZE)
-			{
-				while (match(s[i + 1]))
-
-					memmove(&buf[i + 1], &buf[i + 2], read_size - i);
-			}
-			else
-			{
-				if (match())
-					buf[i] = set2
-			}
+			/* if (flags & FLAG_DELETE && flags & FLAG_SQUEEZE) */
+			/* { */
+            /*  */
+			/* } */
+			/* else if (flags & FLAG_DELETE && match()) */
+			/* { */
+			/* 	memmove(&buf[i], &buf[i + 1], read_size - i); */
+            /*  */
+			/* } */
+			/* else if (flags & FLAG_SQUEEZE) */
+			/* { */
+			/* 	while (match(s[i + 1])) */
+            /*  */
+			/* 		memmove(&buf[i + 1], &buf[i + 2], read_size - i); */
+			/* } */
+			/* else */
+			/* { */
+				/* if (match()) */
+				/* 	buf[i] = set2 */
+			/* } */
 		}
 	}
 
