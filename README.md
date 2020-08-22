@@ -2,17 +2,18 @@
 
 Rewrite of some core utilities for educational purposes.
 
-| Name       | Description                                                     |
-|------------|-----------------------------------------------------------------|
-| `mkdir`    | make directories                                                |
-| `basename` | strip directory and suffix from filenames                       |
-| `rm`       | remove files or directories                                     |
-| `seq`      | print a sequence of numbers                                     |
-| `tee`      | read from standard input and write to standard output and files |
+| Name       | Description                                                      |
+|------------|----------------------------------------------------------------- |
+| `mkdir`    | make directories                                                 |
+| `basename` | strip directory and suffix from filenames                        |
+| `rm`       | remove files or directories                                      |
+| `seq`      | print a sequence of numbers                                      |
+| `tee`      | read from standard input and write to standard output and files  |
+| `shuf`     | generate random permutations                                     |
 
 # TODO
 
-| Name       | Description                                                     |
+| Name       | Description |
 |------------|-----------------------------------------------------------------|
 | `cut`      | remove sections from each line of files                         |
 | `cp`       | |
@@ -25,7 +26,6 @@ Rewrite of some core utilities for educational purposes.
 | `tail`     | |
 | `tr`       | |
 | `test`     | |
-| `shuf`     | |
 | `sort`     | |
 | `uniq`     | |
 | `dirname`  | |
