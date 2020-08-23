@@ -10,26 +10,31 @@ Rewrite of some core utilities for educational purposes.
 | `seq`      | print a sequence of numbers                                      |
 | `tee`      | read from standard input and write to standard output and files  |
 | `shuf`     | generate random permutations                                     |
+| `echo`     | display a line of text                                           |
 
-# TODO
+## Pending
 
 | Name       | Description |
 |------------|-----------------------------------------------------------------|
 | `cut`      | remove sections from each line of files                         |
+| `uniq`     | report or omit repeated lines |
+| `tr`       | translate or delete characters |
+| `chown`    | change file owner and group |
+
+## TODO
+
+| Name       | Description |
+|------------|-----------------------------------------------------------------|
 | `cp`       | |
 | `chmod`    | |
-| `chown`    | |
 | `ln`       | |
 | `mv`       | |
 | `touch`    | |
 | `cat`      | |
 | `tail`     | |
-| `tr`       | |
 | `test`     | |
 | `sort`     | |
-| `uniq`     | |
 | `dirname`  | |
 | `date`     | |
 | `du`       | |
-| `echo`     | |
 | `expr`     | |
