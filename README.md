@@ -11,6 +11,7 @@ Rewrite of some core utilities for educational purposes.
 | `tee`      | read from standard input and write to standard output and files  |
 | `shuf`     | generate random permutations                                     |
 | `echo`     | display a line of text                                           |
+| `yes`      | output a string repeatedly until killed                          |
 
 ## Pending
 
