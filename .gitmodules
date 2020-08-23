@@ -1,3 +1,3 @@
 [submodule "trand"]
 	path = trand
-	url = https://github.com/SaltyMilk/trand
+	url = git@cacharle.xyz:/srv/git/trand.git
