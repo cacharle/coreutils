@@ -16,11 +16,12 @@ Rewrite of some core utilities for educational purposes.
 ## Pending
 
 | Name       | Description |
-|------------|-----------------------------------------------------------------|
-| `cut`      | remove sections from each line of files                         |
-| `uniq`     | report or omit repeated lines |
-| `tr`       | translate or delete characters |
-| `chown`    | change file owner and group |
+|------------|----------------------------------------------------------------- |
+| `cut`      | remove sections from each line of files                          |
+| `uniq`     | report or omit repeated lines                                    |
+| `tr`       | translate or delete characters                                   |
+| `chown`    | change file owner and group                                      |
+| `xargs`    | construct argument lists and invoke utility                      |
 
 ## TODO
 

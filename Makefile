@@ -2,11 +2,11 @@ BINDIR = bin
 SRCDIR = src
 
 CC = gcc
-CCFLAGS = -Wall -Wextra -Wpedantic
+CCFLAGS = -std=c99 -Wall -Wextra -Wpedantic -Wno-implicit-fallthrough
 
 all: prebuild $(BINDIR)/basename $(BINDIR)/chown $(BINDIR)/cut $(BINDIR)/head \
 		$(BINDIR)/mkdir $(BINDIR)/mv $(BINDIR)/rm $(BINDIR)/seq \
-		$(BINDIR)/shuf $(BINDIR)/tee $(BINDIR)/tr \
+		$(BINDIR)/shuf $(BINDIR)/tee $(BINDIR)/tr $(BINDIR)/xargs \
 		$(BINDIR)/shuf_trand
 
 prebuild:
@@ -43,6 +43,9 @@ $(BINDIR)/tee: $(SRCDIR)/tee.c
 	$(CC) $(CCFLAGS) -o $@ $^
 
 $(BINDIR)/tr: $(SRCDIR)/tr.c
+	$(CC) $(CCFLAGS) -o $@ $^
+
+$(BINDIR)/xargs: $(SRCDIR)/xargs.c
 	$(CC) $(CCFLAGS) -o $@ $^
 
 #### shuf using trand

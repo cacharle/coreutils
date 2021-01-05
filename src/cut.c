@@ -46,18 +46,17 @@ int		parse_uint(char *s, char **endptr)
 
 int 	main(int argc, char **argv)
 {
-	int					option;
-	int	list_start = LIST_VALUE_INFINITY;
-	int	list_end   = LIST_VALUE_INFINITY;
-	t_list_type			list_type  = LIST_UNDEFINED;
-	wchar_t				delimiter  = '\t';
-	bool				print_only_delimiter = false;
-	char				line_delimiter = '\n';
+	int         option;
+	int         list_start           = LIST_VALUE_INFINITY;
+	int         list_end             = LIST_VALUE_INFINITY;
+	t_list_type list_type            = LIST_UNDEFINED;
+	wchar_t     delimiter            = '\t';
+	bool        print_only_delimiter = false;
+	char        line_delimiter       = '\n';
 
 	g_name = argv[0];
 	while ((option = getopt(argc, argv, "b:c:d:f:sz")) > 0)
 	{
-
 		switch (option)
 		{
 			case 'b':
@@ -188,6 +187,8 @@ int 	main(int argc, char **argv)
 						counter++;
 					}
 					break;
+				default:
+					fatal_errno();
 			}
 			putchar('\n');
 		}

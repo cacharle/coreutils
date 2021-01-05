@@ -109,13 +109,13 @@ int				main(int argc, char **argv)
 	{
 		int precision = MAX(first.precision, increment.precision);
 		if (!padding)
-			printf("%.*llf", precision, first.value);
+			printf("%.*Lf", precision, first.value);
 		else
 		{
 			int width = MAX(last.integer_len, first.integer_len);
 			if (precision != 0)
 				width += precision + 1;
-			printf("%0*.*llf", width, precision, first.value);
+			printf("%0*.*Lf", width, precision, first.value);
 		}
 		first.value += increment.value;
 		if (increment.value > 0 ? (first.value <= last.value) : (first.value >= last.value))
