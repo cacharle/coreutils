@@ -22,6 +22,8 @@
 ** bug with random pid without optimization
 ** command line args
 ** process selection
+** change column width according to title
+** $COLUMNS max width if last column (for command and args)
 */
 
 #define PROC_DIR "/proc"
@@ -49,6 +51,7 @@ static char g_comm[TASK_COMM_LEN];
 static pid_t g_pid;
 static pid_t g_ppid;
 static pid_t g_pgrp;
+static pid_t g_session;
 
 static uid_t g_uid;
 static gid_t g_gid;
@@ -73,17 +76,20 @@ void print_func_args(t_field_info *info)
 	FILE *cmdline_file = fopen(g_file_path, "r");
 	if (cmdline_file == NULL)
 		return;
-	int count = 0;
+	/* int count = 0; */
 	int c = EOF;
 	while ((c = fgetc(cmdline_file)) != EOF)
 	{
-		fputc(c, stdout);
-		count++;
-		if (count > info->width)
-			break;
+		if (c == '\0')
+			fputc(' ', stdout);
+		else
+			fputc(c, stdout);
+		/* count++; */
+		/* if (count > info->width) */
+		/* 	break; */
 	}
-	while (count < info->width)
-		fputc(' ', stdout);
+	/* while (count < info->width) */
+	/* 	fputc(' ', stdout); */
 }
 
 void print_func_comm(t_field_info *info)
@@ -222,32 +228,28 @@ t_field_info *field_info_from_specifier(const char *specifier)
 	return (NULL);
 }
 
-static char g_full_format[]    = "user pid ppid c stime tty time args";
+static char g_full_format[]    = "user pid ppid c time tty time args";
 static char g_long_format[]    = "f s user pid ppid c pri nice addr sz wchan tty time comm";
 static char g_default_format[] = "pid tty time comm";
-
-#define MINOR_MASK 0b01111111111100000000000000000000
-#define MINOR_MASK 0b01111111111100000000000000000000
 
 static size_t         g_fields_size = 0;
 static t_field_info **g_fields = NULL;
 
+#define SEP_CHARS " ,"
+
 void fields_from_format(char *format)
 {
 	size_t i;
-	for (i = 0; format[i] != '\0'; i++)
-		if (isspace(format[i]) && isspace(format[i + 1]))
-			exit(1);
 	g_fields_size = 1;
 	for (i = 0; format[i] != '\0'; i++)
-		if (isspace(format[i]))
+		if (format[i] == ' ' || format[i] == ',')
 			g_fields_size++;
 	g_fields = malloc(g_fields_size * sizeof(t_field_info*));
 	if (g_fields == NULL)
 		exit(1);
 	i = 0;
 	char *specifier = NULL;
-	while ((specifier = strsep(&format, " ,")) != NULL)
+	while ((specifier = strsep(&format, ", ")) != NULL)
 	{
 		g_fields[i] = field_info_from_specifier(specifier);
 		if (g_fields[i] == NULL)
@@ -332,7 +334,7 @@ void parse_stat_file(FILE *stat_file)
 {
 	fscanf(
 		stat_file,
-		"%*d %s %c %d %d %*d %d %*d %u %*lu %*lu %*lu %*lu %*lu %*lu %*ld %*ld %*ld "
+		"%*d %s %c %d %d %d %d %*d %u %*lu %*lu %*lu %*lu %*lu %*lu %*ld %*ld %*ld "
 		"%ld %*ld %*ld %llu %lu %ld %*lu %*lu %*lu %*lu %*lu %*lu %*lu %*lu %*lu %*lu "
 		"%lu %*lu %*lu %*d %*d %*u %*llu %*lu %*ld %*lu %*lu %*lu %*lu %*lu %*lu %*d",
 		/* &g_pid, */
@@ -340,6 +342,7 @@ void parse_stat_file(FILE *stat_file)
 		&g_state,
 		&g_ppid,
 		&g_pgrp,
+		&g_session,
 		&g_tty_nr,
 		&g_flags,
 		&g_nice,
@@ -350,15 +353,38 @@ void parse_stat_file(FILE *stat_file)
 	);
 }
 
+bool default_filter(void)           { return true; }
+bool no_filter(void)                { return true; }
+bool no_session_leader_filter(void) { return g_pid != g_session; }
+bool has_tty_filter(void)           { return g_tty_nr != 0 && no_session_leader_filter(); }
 
-int main(int argc, char **argv)
+
+int main(int argc, char **argv, char **envp)
 {
-	g_page_size = getpagesize();
+	int option;
+	char *format = g_default_format;
+
+	bool (*filter)(void) = default_filter;
+
+	while ((option = getopt(argc, argv, "Aeadflo:")) != -1)
+	{
+		switch (option)
+		{
+			case 'A':
+			case 'e': filter = &no_filter;                break;
+			case 'a': filter = &has_tty_filter;           break;
+			case 'd': filter = &no_session_leader_filter; break;
+
+			case 'f': format = g_full_format;             break;
+			case 'l': format = g_long_format;             break;
+			case 'o': format = optarg;                    break;
+		}
+	}
+
+	g_page_size  = getpagesize();
 	g_clock_tick = sysconf(_SC_CLK_TCK);
 
-	char format[] = "sz vsz comm";
-
-	fields_from_format(g_long_format);
+	fields_from_format(format);
 	print_fields_headers();
 
 	DIR *proc_dir = opendir(PROC_DIR);
@@ -379,6 +405,8 @@ int main(int argc, char **argv)
 		if (stat_file == NULL)
 			continue;
 		parse_stat_file(stat_file);
+		if (!filter())
+			continue;
 		for (size_t i = 0; i < g_fields_size; i++)
 		{
 			(g_fields[i]->print_func)(g_fields[i]);
