@@ -1,6 +1,7 @@
 # coreutils
 
 Rewrite of some core utilities for educational purposes.
+I try to follow the POSIX version of those commands for simplicity sake, e.g `man 1p ls`.
 
 | Name       | Description                                                      |
 |------------|----------------------------------------------------------------- |
@@ -12,20 +13,23 @@ Rewrite of some core utilities for educational purposes.
 | `shuf`     | generate random permutations                                     |
 | `echo`     | display a line of text                                           |
 | `yes`      | output a string repeatedly until killed                          |
+| `df`       | report free disk space                                           |
+
 
 ## Pending
 
-| Name       | Description |
+| Name       | Description                                                      |
 |------------|----------------------------------------------------------------- |
 | `cut`      | remove sections from each line of files                          |
 | `uniq`     | report or omit repeated lines                                    |
 | `tr`       | translate or delete characters                                   |
 | `chown`    | change file owner and group                                      |
 | `xargs`    | construct argument lists and invoke utility                      |
+| `ps`       | report process status                                            |
 
 ## TODO
 
-| Name       | Description |
+| Name       | Description                                                     |
 |------------|-----------------------------------------------------------------|
 | `cp`       | |
 | `chmod`    | |
