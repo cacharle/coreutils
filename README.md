@@ -14,6 +14,7 @@ I try to follow the POSIX version of those commands for simplicity sake, e.g `ma
 | `echo`     | display a line of text                                           |
 | `yes`      | output a string repeatedly until killed                          |
 | `df`       | report free disk space                                           |
+| `strings`  | find printable strings in files                                  |
 
 
 ## Pending

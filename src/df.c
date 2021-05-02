@@ -92,7 +92,7 @@ int main(int argc, char **argv)
 			exit(1);
 		}
 		t_fs_info *last = &g_fs_infos[g_fs_infos_size - 1];
-		fscanf(mounts_file, "%s %s", &last->name, &last->mount);
+		fscanf(mounts_file, "%s %s", last->name, last->mount);
 		int c;
 		do
 			c = fgetc(mounts_file);
